@@ -17,7 +17,7 @@ const route = [
     meta: {
       title: '登录页'
     }
-  } /* ,
+  },
   {
     path: '/register',
     name: 'register',
@@ -25,7 +25,7 @@ const route = [
     meta: {
       title: '注册页'
     }
-  },
+  } /* ,
   {
     path: '/layout',
     name: 'layout',

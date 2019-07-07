@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="main-content">
-      <!-- <img src="../../assets/img/logo.png" /> -->
-      <span class="main-content-span">yapai.nmbp.ui</span>
+      <img src="../../assets/img/logo.png" />
+      <!-- <span class="main-content-span">yapai.nmbp.ui</span> -->
       <el-form
         role="form"
         class="main-content-form"
@@ -43,10 +43,10 @@
       </el-form>
       <hr />
       <div>
-        <a href="javascript:;" class="main-content-revise">
+        <a href="javascript:;" @click="gotoPage('changeps')" class="main-content-revise">
           <span>忘记密码？去修改</span>
         </a>
-        <a href="javascript:;" class="main-content-register">
+        <a href="javascript:;" @click="gotoPage('register')" class="main-content-register">
           <span>
             没有账号？去注册
             <i class="el-icon-right"></i>
@@ -57,17 +57,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      loginForm: {
-        username: '',
-        password: '',
-      },
-    };
-  },
-};
+<script src="./login.component.js">
 </script>
 
 
