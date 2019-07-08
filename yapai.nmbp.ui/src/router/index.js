@@ -25,7 +25,7 @@ const route = [
     meta: {
       title: '注册页'
     }
-  } /* ,
+  },
   {
     path: '/layout',
     name: 'layout',
@@ -38,17 +38,17 @@ const route = [
         meta: {
           title: '主页'
         }
-      },
-      {
+      }
+      /* {
         path: '/page',
         name: 'page',
         component: () => import('@/views/page/page.vue'),
         meta: {
           title: '页面'
         }
-      } 
+      }  */
     ]
-  }*/
+  }
 ];
 
 export default new Router({

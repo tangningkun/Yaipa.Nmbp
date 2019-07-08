@@ -38,7 +38,7 @@
           />
         </div>
         <div class="main-content-input">
-          <button type="button" id="btn-submit" class="btn btn-danger">登录</button>
+          <button type="button" id="btn-submit" class="btn btn-danger" @click="gotoPage('home')">登录</button>
         </div>
       </el-form>
       <hr />
