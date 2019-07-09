@@ -18,7 +18,7 @@
           <input
             type="text"
             class="form-control"
-            v-model="loginForm.username"
+            v-model="loginForm.phone"
             placeholder="请输入用户名"
             aria-describedby="basic-username"
             autocomplete="on"
@@ -31,14 +31,19 @@
           <input
             type="password"
             class="form-control"
-            v-model="loginForm.password"
+            v-model="loginForm.passwd"
             placeholder="请输入密码"
             aria-describedby="basic-password"
             autocomplete="on"
           />
         </div>
         <div class="main-content-input">
-          <button type="button" id="btn-submit" class="btn btn-danger" @click="gotoPage('home')">登录</button>
+          <button
+            type="button"
+            id="btn-submit"
+            class="btn btn-danger"
+            @click="handleLogin('home')"
+          >登录</button>
         </div>
       </el-form>
       <hr />
@@ -59,6 +64,7 @@
 
 <script src="./login.component.js">
 </script>
+
 
 
 <style src="./login.scss" lang="scss" scoped></style>

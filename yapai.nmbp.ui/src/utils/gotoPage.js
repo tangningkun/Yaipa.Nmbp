@@ -1,11 +1,5 @@
 /* jshint esversion: 6 */
-export default obj => {
-  debugger;
-  const page = {
-    gotoPage: function(obj) {
-      console.log('gotoPage');
-      return;
-    }
-  };
-  return page.gotoPage(obj);
+export const gotoPage = obj => {
+  this.$router.push({ name: obj, params: { username: 'admin' } });
+  return;
 };
