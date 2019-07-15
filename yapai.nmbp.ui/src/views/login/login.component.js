@@ -1,7 +1,6 @@
 /* jshint esversion: 6 */
 
-import { loginApi } from '../../api/user';
-import { gotoPage } from '../../utils/gotoPage';
+import { loginApi, jsonApi } from '../../api/user';
 
 export default {
   data() {
@@ -18,9 +17,12 @@ export default {
       this.$router.push({ name: page, params: { username: 'admin' } });
     },
     handleLogin(page) {
-      console.log(this.loginForm);
+      //console.log(this.loginForm);
+      jsonApi().then(res => {
+        //console.log(res);
+      });
       loginApi(this.loginForm).then(res => {
-        console.log(res);
+        //console.log(res);
         if (res.code == 200) {
           this.gotoPage(page);
         }

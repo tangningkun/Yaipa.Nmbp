@@ -35,7 +35,7 @@ export default {
       console.log(key, keyPath);
     },
     logout() {
-      this.$router.push({ path: '/' });
+      this.$router.push({ name: 'login' });
     },
   },
 };
