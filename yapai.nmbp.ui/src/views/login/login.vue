@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="main-content">
-      <img src="../../assets/img/logo.png" />
-      <!-- <span class="main-content-span">yapai.nmbp.ui</span> -->
+      <!-- <img src="../../assets/img/logo.png" /> -->
+      <span class="main-content-span">边坡巡检系统</span>
       <el-form
         role="form"
         class="main-content-form"
@@ -18,7 +18,7 @@
           <input
             type="text"
             class="form-control"
-            v-model="loginForm.phone"
+            v-model="loginForm.account"
             placeholder="请输入用户名"
             aria-describedby="basic-username"
             autocomplete="on"
@@ -31,7 +31,7 @@
           <input
             type="password"
             class="form-control"
-            v-model="loginForm.passwd"
+            v-model="loginForm.password"
             placeholder="请输入密码"
             aria-describedby="basic-password"
             autocomplete="on"

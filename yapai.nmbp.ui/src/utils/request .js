@@ -2,6 +2,8 @@
 import axios from 'axios';
 import { Message, MessageBox } from 'element-ui';
 import store from '../store/index';
+import { _getSessionStore } from '../common/js/storage';
+import globalFn from '../common/js/utils';
 
 /**
  * 创建axios实例
@@ -13,24 +15,24 @@ const service = axios.create({
 
 service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+// 请求拦截器
 service.interceptors.request.use(
   config => {
-    // 登录流程控制中，根据本地是否存在token判断用户的登录情况
-    // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
-    // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
-    // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
-    const token = store.state.token;
-    token && (config.headers.Authorization = token);
+    // 设置请求头
+    if (store.getters.token) {
+      // 让每个请求携带token
+      config.headers['Authorization'] = _getSessionStore('token');
+    }
+    /* const token = store.state.token;
+    token && (config.headers.Authorization = token); */
     // 对全局参数做过滤，把不存在的参数删除
     if (config.method === 'post') {
-      console.log('POST');
       for (const key in config.data) {
         if (!config.data[key] && config.data[key] !== 0) {
           delete config.data[key];
         }
       }
     } else if (config.method === 'get') {
-      console.log('GET');
       for (const key in config.params) {
         if (!config.params[key] && config.params[key] !== 0) {
           delete config.params[key];
@@ -61,73 +63,66 @@ service.interceptors.request.use(
     return config;
   },
   error => {
-    console.log(error);
-    return Promise.reject();
+    // Do something with request error
+    console.log(error); // for debug
+    Promise.reject(error);
   }
 );
 
+// respone interceptor
 service.interceptors.response.use(
+  /**
+   * 下面的注释为通过在response里，自定义code来标示请求状态
+   * 当code返回如下情况则说明权限有问题，登出并返回到登录页
+   * 如想通过xmlhttprequest来状态码标识 逻辑可写在下面error中
+   * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
+   */
   response => {
-    if (response.status === 200) {
-      return response.data;
+    const res = response.data;
+    let tips = '用户信息错误';
+    let btMsg = '重新登录';
+    if (res.code === 20101 || res.code === 20201) {
+      switch (res.code) {
+        case 20101:
+          tips = '当前账号在其他地方登陆, 如不是本人操作，请及时修改密码';
+          btMsg = '确定';
+          break;
+        case 20201:
+          tips = '用户信息错误, 请重新登录';
+          btMsg = '重新登录';
+          break;
+        // case 20203:
+        //   tips = '用户未绑定角色，无法登陆'
+        //   btMsg = '确定'
+        //   break
+      }
+      MessageBox.alert(tips, {
+        confirmButtonText: btMsg,
+        type: 'info'
+      })
+        .then(() => {
+          store.dispatch('user/loginOut').then(() => {
+            location.reload(); // 为了重新实例化vue-router对象 避免bug
+          });
+        })
+        .catch(() => {});
+      return Promise.reject('error');
     } else {
-      Promise.reject();
+      const data = response.data;
+      return data;
     }
   },
   error => {
-    console.log(error);
-    return Promise.reject();
+    console.log(error); // for debug
+    const message = error.response ? globalFn.requestError(error.response.status) : '请求超时';
+    Message({
+      showClose: true,
+      message: message,
+      type: 'error',
+      duration: 3 * 1000
+    });
+    return Promise.reject(error);
   }
 );
 
 export default service;
-
-/**
- * 提示函数
- * 禁止点击蒙层、显示一秒后关闭
- */
-/* const tip = msg => {
-  Message({
-    showClose: true,
-    message: msg,
-    duration: 3 * 1000
-  });
-}; */
-
-/**
- * 请求失败后的错误统一处理
- * @param {Number} status 请求失败的状态码
- */
-/* const errorHandle = (status, other) => {
-  // 状态码判断
-  switch (status) {
-    // 401: 未登录状态，跳转登录页
-    case 401:
-      toLogin();
-      break;
-    // 403 token过期
-    // 清除token并跳转登录页
-    case 403:
-      tip('登录过期，请重新登录');
-      localStorage.removeItem('token');
-      store.commit('loginSuccess', null);
-      setTimeout(() => {
-        toLogin();
-      }, 1000);
-      break;
-    // 404请求不存在
-    case 404:
-      tip('请求的资源不存在');
-      break;
-    default:
-      console.log(other);
-  }
-}; */
-
-/* if (process.env.NODE_ENV == 'development') {
-  axios.defaults.baseURL = 'https://www.baidu.com';
-} else if (process.env.NODE_ENV == 'debug') {
-  axios.defaults.baseURL = 'https://www.ceshi.com';
-} else if (process.env.NODE_ENV == 'production') {
-  axios.defaults.baseURL = 'https://www.production.com';
-} */

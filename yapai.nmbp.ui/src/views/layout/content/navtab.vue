@@ -31,9 +31,6 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    gotoPage(page) {
-      this.$router.push({ name: page });
-    },
   },
 };
 </script>

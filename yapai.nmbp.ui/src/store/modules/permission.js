@@ -2,7 +2,7 @@
 import { routeApi } from '../../api/user';
 import globalFn from '../../common/js/utils';
 // 布局组件
-import Layout from '@/views/layout/layout';
+import Layout from '../../views/layout/layout';
 
 // 添加默认页面
 function addPage(arr) {
@@ -17,9 +17,9 @@ function addPage(arr) {
     children: [
       {
         path: '/',
-        component: () => import('@/views/home/home'),
+        component: () => import('../../views/home/home'),
         name: 'home',
-        meta: { title: '首页', icon: 'el-icon-albb-homepage' },
+        meta: { title: '首页', icon: 'el-icon-s-home' },
         children: []
       }
     ]
@@ -34,14 +34,14 @@ function addPage(arr) {
     children: [
       {
         path: 'PAGE',
-        component: () => import('@/views/HOWTOUSE/index'),
+        component: () => import('../../views/HOWTOUSE/index'),
         name: 'PAGE',
-        meta: { title: '使用说明', icon: 'el-icon-albb-feedback' },
+        meta: { title: '使用说明', icon: 'el-icon-question' },
         children: []
       }
     ]
   };
-  arr.unshift(home);
+  arr.unshift(home); //unshift()方法可向数组的开头添加一个或更多元素，并返回新的长度
   arr.push(HOWTOUSE);
   return arr;
 }

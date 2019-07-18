@@ -27,8 +27,24 @@ export default article;
 export const loginApi = data => {
   return request({
     url: httpservice.loginApi,
+    method: 'post',
+    data
+  });
+};
+export const getUserInfoApi = data => {
+  return request({
+    url: httpservice.userInfoApi,
     method: 'get',
-    params: data
+    data
+  });
+};
+
+// 退出登录
+export const loginOutApi = data => {
+  return request({
+    url: httpservice.loginOutApi,
+    method: 'post',
+    data
   });
 };
 
@@ -36,7 +52,7 @@ export const jsonApi = data => {
   return request({
     url: httpservice.jsonApi,
     method: 'get',
-    params: data
+    data
   });
 };
 
@@ -44,6 +60,6 @@ export const routeApi = data => {
   return request({
     url: httpservice.routeApi,
     method: 'get',
-    params: data
+    data
   });
 };

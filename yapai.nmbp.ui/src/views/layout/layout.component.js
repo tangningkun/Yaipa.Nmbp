@@ -12,6 +12,7 @@ export default {
     },
     controlNav() {
       this.$store.state.isCollapse = this.$store.state.isCollapse ? false : true;
+      console.log(this.$store.state.isCollapse);
     }
   }
 };

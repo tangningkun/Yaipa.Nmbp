@@ -63,7 +63,7 @@ export const route = [
   routes: route
 }); */
 export default new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // 加上后去掉#
   scrollBehavior: () => ({ y: 0 }),
   routes: route
 });

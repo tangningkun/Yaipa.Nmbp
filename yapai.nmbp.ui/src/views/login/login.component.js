@@ -1,14 +1,15 @@
 /* jshint esversion: 6 */
 
-import { loginApi, jsonApi } from '../../api/user';
+import { loginApi } from '../../api/user';
+import { Message } from 'element-ui';
 
 export default {
   data() {
     return {
       loginForm: {
-        key: '00d91e8e0cca2b76f515926a36db68f5',
-        phone: '',
-        passwd: ''
+        account: '',
+        password: '',
+        type: 2
       }
     };
   },
@@ -17,14 +18,23 @@ export default {
       this.$router.push({ name: page, params: { username: 'admin' } });
     },
     handleLogin(page) {
-      //console.log(this.loginForm);
-      jsonApi().then(res => {
-        //console.log(res);
-      });
+      console.log(this.loginForm);
       loginApi(this.loginForm).then(res => {
         //console.log(res);
-        if (res.code == 200) {
-          this.gotoPage(page);
+        if (res.code == 20000) {
+          // 记住cookie
+          this.$store.dispatch('user/setToken', res.token);
+          // 记住用户信息
+          this.$store.dispatch('user/setUserInfo', res.content.data).then(() => {
+            this.$router.push('/');
+          });
+        } else {
+          Message({
+            showClose: true,
+            message: res.message,
+            type: res.success ? 'success' : 'error',
+            duration: 3 * 1000
+          });
         }
       });
     }

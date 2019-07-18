@@ -1,10 +1,5 @@
 <template>
-  <el-menu
-    :default-active="activeIndex"
-    class="el-menu-demo main-header-el-menu"
-    mode="horizontal"
-    @select="handleSelect"
-  >
+  <el-menu :default-active="activeIndex" class="el-menu-demo main-header-el-menu" mode="horizontal">
     <el-submenu index="1" class="main-header-el-menu-item">
       <template slot="title">
         Admin
@@ -31,11 +26,10 @@ export default {
     return { activeIndex: '1' };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    },
     logout() {
-      this.$router.push({ name: 'login' });
+      this.$store.dispatch('user/loginOut').then(() => {
+        location.reload(); // 为了重新实例化vue-router对象 避免bug
+      });
     },
   },
 };
