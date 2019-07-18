@@ -4,6 +4,7 @@ const base = {
   userInfoApi: 'https://www.lyh.red/api/user/userInfo',
   loginOutApi: 'https://www.lyh.red/api/user/loginOut',
   jsonApi: '/static/Json/data.json',
-  routeApi: '/static/Json/route.json'
+  routeApi: '/static/Json/route.json',
+  login1Api: 'http://cloud.yapaiql.com:8005/Service/Service.asmx/Login'
 };
 export default base;

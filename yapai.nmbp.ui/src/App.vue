@@ -24,6 +24,6 @@
   }
 }
 #nprogress .bar {
-  background: rgb(64, 158, 255) !important; //自定义颜色 修改加载线颜色
+  background: rgb(255, 64, 90) !important; //自定义颜色 修改加载线颜色
 }
 </style>

@@ -1,14 +1,23 @@
 /* jshint esversion: 6 */
 
-import { loginApi } from '../../api/user';
+import { loginApi, login1Api } from '../../api/user';
 import { Message } from 'element-ui';
 
 export default {
   data() {
     return {
+      formInfo: {
+        remember: false, // 记住密码
+        // 表单参数
+        data: {
+          account: 'test',
+          password: '123456',
+          type: 2 // 平台用户
+        }
+      },
       loginForm: {
-        account: '',
-        password: '',
+        account: 'test',
+        password: '123456',
         type: 2
       }
     };
@@ -37,6 +46,17 @@ export default {
           });
         }
       });
+    },
+    login() {
+      console.log('123');
+      let data = { user: 'admin', psw: 'ypqj@1234' };
+      login1Api(JSON.stringify(data)).then(res => {
+        console.log('res', res);
+      });
     }
+  },
+
+  mounted() {
+    this.login();
   }
 };

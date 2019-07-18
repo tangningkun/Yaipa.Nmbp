@@ -63,3 +63,12 @@ export const routeApi = data => {
     data
   });
 };
+
+export const login1Api = data => {
+  return request({
+    url: httpservice.login1Api,
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    data
+  });
+};
